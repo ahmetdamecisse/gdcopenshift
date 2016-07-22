@@ -1,0 +1,37 @@
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="spring-dao-jpa-hibernate-mysqlPU" transaction-type="RESOURCE_LOCAL">
+        <class>com.gdc.test.jpa.Administrateur</class>
+        <class>com.gdc.test.jpa.Bdd</class>
+        <class>com.gdc.test.jpa.Candidat</class>
+        <class>com.gdc.test.jpa.Cherchercandidat</class>
+        <class>com.gdc.test.jpa.CherchercandidatPK</class>
+        <class>com.gdc.test.jpa.Consulternotification</class>
+        <class>com.gdc.test.jpa.ConsulternotificationPK</class>
+        <class>com.gdc.test.jpa.Contactercandidat</class>
+        <class>com.gdc.test.jpa.ContactercandidatPK</class>
+        <class>com.gdc.test.jpa.Entretien</class>
+        <class>com.gdc.test.jpa.Experiencesprofessionnelles</class>
+        <class>com.gdc.test.jpa.Faireuntest</class>
+        <class>com.gdc.test.jpa.FaireuntestPK</class>
+        <class>com.gdc.test.jpa.Fichedeposte</class>
+        <class>com.gdc.test.jpa.Fichedetest</class>
+        <class>com.gdc.test.jpa.Formation</class>
+        <class>com.gdc.test.jpa.Langages</class>
+        <class>com.gdc.test.jpa.Langues</class>
+        <class>com.gdc.test.jpa.Materielssystemesexploitation</class>
+         <class>com.gdc.test.jpa.Methodologie</class>
+        <class>com.gdc.test.Modelisation</class>
+        <class>com.gdc.test.jpa.Notification</class>
+        <class>com.gdc.test.jpa.Outils</class>
+        <class>com.gdc.test.Profil</class>
+        <class>com.gdc.test.jpa.Profilgl</class>
+        <class>com.gdc.test.jpa.Recruteur</class>
+        <class>com.gdc.test.jpa.Suivreentrtien</class>
+        <class>com.gdc.test.jpa.SuivreentrtienPK</class>
+        <class>com.gdc.test.jpa.UserRoles</class>
+        <class>com.gdc.test.jpa.Users</class>
+    </persistence-unit>
+</persistence>
