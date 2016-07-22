@@ -6,17 +6,21 @@
 package com.gdc.test.jpa;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,8 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Fichedetest.findAll", query = "SELECT f FROM Fichedetest f"),
     @NamedQuery(name = "Fichedetest.findByIdFicheTest", query = "SELECT f FROM Fichedetest f WHERE f.idFicheTest = :idFicheTest"),
-    @NamedQuery(name = "Fichedetest.findByListeQuestions", query = "SELECT f FROM Fichedetest f WHERE f.listeQuestions = :listeQuestions"),
-    @NamedQuery(name = "Fichedetest.findByListeReponses", query = "SELECT f FROM Fichedetest f WHERE f.listeReponses = :listeReponses"),
     @NamedQuery(name = "Fichedetest.findByVersion", query = "SELECT f FROM Fichedetest f WHERE f.version = :version")})
 public class Fichedetest implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,13 +39,14 @@ public class Fichedetest implements Serializable {
     @Basic(optional = false)
     @Column(name = "idFicheTest")
     private Integer idFicheTest;
-    @Column(name = "listeQuestions")
-    private String listeQuestions;
-    @Column(name = "listeReponses")
-    private String listeReponses;
     @Column(name = "version")
     @Version
     private Integer version;
+    @JoinTable(name = "avoirquestion", joinColumns = {
+        @JoinColumn(name = "idFicheTest", referencedColumnName = "idFicheTest")}, inverseJoinColumns = {
+        @JoinColumn(name = "idQuestion", referencedColumnName = "idQuestion")})
+    @ManyToMany
+    private List<Listequestion> listequestionList;
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(optional = false)
     private Recruteur username;
@@ -63,28 +66,21 @@ public class Fichedetest implements Serializable {
         this.idFicheTest = idFicheTest;
     }
 
-    public String getListeQuestions() {
-        return listeQuestions;
-    }
-
-    public void setListeQuestions(String listeQuestions) {
-        this.listeQuestions = listeQuestions;
-    }
-
-    public String getListeReponses() {
-        return listeReponses;
-    }
-
-    public void setListeReponses(String listeReponses) {
-        this.listeReponses = listeReponses;
-    }
-
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @XmlTransient
+    public List<Listequestion> getListequestionList() {
+        return listequestionList;
+    }
+
+    public void setListequestionList(List<Listequestion> listequestionList) {
+        this.listequestionList = listequestionList;
     }
 
     public Recruteur getUsername() {

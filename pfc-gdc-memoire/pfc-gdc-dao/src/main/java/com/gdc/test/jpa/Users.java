@@ -7,6 +7,7 @@ package com.gdc.test.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,12 +15,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Users.findByDateDeNaissance", query = "SELECT u FROM Users u WHERE u.dateDeNaissance = :dateDeNaissance"),
     @NamedQuery(name = "Users.findByVersion", query = "SELECT u FROM Users u WHERE u.version = :version")})
 public class Users implements Serializable {
-    private static final long serialVersionUID = 1L;
+       private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "username")
@@ -227,5 +230,6 @@ public class Users implements Serializable {
     public String toString() {
         return "username=" + username +" password="+password+" nom="+nom +" prenom="+prenom +" localisation="+localisation +" mail="+mail+" telephone="+telephone+" enabled="+enabled+" specialité="+specialite+" date naiss="+dateDeNaissance+" version="+version+"\n";
     }
-    
+
+       
 }

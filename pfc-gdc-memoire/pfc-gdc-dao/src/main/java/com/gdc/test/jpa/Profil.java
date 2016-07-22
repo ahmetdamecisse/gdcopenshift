@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Profil.findByCompetencesFonctionnelles", query = "SELECT p FROM Profil p WHERE p.competencesFonctionnelles = :competencesFonctionnelles"),
     @NamedQuery(name = "Profil.findByEtatProfil", query = "SELECT p FROM Profil p WHERE p.etatProfil = :etatProfil")})
 public class Profil implements Serializable {
-    private static final long serialVersionUID = 1L;
+       private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "idTypeDeProfil")
@@ -129,5 +129,6 @@ public class Profil implements Serializable {
     public String toString() {
         return "com.gdc.test.jpa.Profil[ idTypeDeProfil=" + idTypeDeProfil + " ]";
     }
-    
+
+   
 }

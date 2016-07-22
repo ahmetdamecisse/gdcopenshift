@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Formation.findByIdTypeDeProfil", query = "SELECT f FROM Formation f WHERE f.idTypeDeProfil = :idTypeDeProfil"),
     @NamedQuery(name = "Formation.findByNomDiplome", query = "SELECT f FROM Formation f WHERE f.nomDiplome = :nomDiplome"),
     @NamedQuery(name = "Formation.findByUniversite", query = "SELECT f FROM Formation f WHERE f.universite = :universite"),
-    @NamedQuery(name = "Formation.findByAnneeOptention", query = "SELECT f FROM Formation f WHERE f.anneeOptention = :anneeOptention"),
+    @NamedQuery(name = "Formation.findByAnneeObtention", query = "SELECT f FROM Formation f WHERE f.anneeObtention = :anneeObtention"),
     @NamedQuery(name = "Formation.findByMention", query = "SELECT f FROM Formation f WHERE f.mention = :mention")})
 public class Formation implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -44,9 +44,9 @@ public class Formation implements Serializable {
     private String nomDiplome;
     @Column(name = "universite")
     private String universite;
-    @Column(name = "anneeOptention")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date anneeOptention;
+    @Column(name = "anneeObtention")
+    @Temporal(TemporalType.DATE)
+    private Date anneeObtention;
     @Column(name = "mention")
     private String mention;
     @JoinColumn(name = "idTypeDeProfil", referencedColumnName = "idTypeDeProfil", insertable = false, updatable = false)
@@ -84,12 +84,12 @@ public class Formation implements Serializable {
         this.universite = universite;
     }
 
-    public Date getAnneeOptention() {
-        return anneeOptention;
+    public Date getAnneeObtention() {
+        return anneeObtention;
     }
 
-    public void setAnneeOptention(Date anneeOptention) {
-        this.anneeOptention = anneeOptention;
+    public void setAnneeObtention(Date anneeObtention) {
+        this.anneeObtention = anneeObtention;
     }
 
     public String getMention() {

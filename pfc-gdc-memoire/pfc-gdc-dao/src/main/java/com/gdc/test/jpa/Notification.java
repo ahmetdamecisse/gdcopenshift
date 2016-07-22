@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -46,6 +47,10 @@ public class Notification implements Serializable {
     private String destinataire;
     @Column(name = "corpsMessage")
     private String corpsMessage;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "pj")
+    private byte[] pj;
     @Column(name = "dateNotification")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateNotification;
@@ -58,6 +63,11 @@ public class Notification implements Serializable {
 
     public Notification(Integer idNotification) {
         this.idNotification = idNotification;
+    }
+
+    public Notification(Integer idNotification, byte[] pj) {
+        this.idNotification = idNotification;
+        this.pj = pj;
     }
 
     public Integer getIdNotification() {
@@ -90,6 +100,14 @@ public class Notification implements Serializable {
 
     public void setCorpsMessage(String corpsMessage) {
         this.corpsMessage = corpsMessage;
+    }
+
+    public byte[] getPj() {
+        return pj;
+    }
+
+    public void setPj(byte[] pj) {
+        this.pj = pj;
     }
 
     public Date getDateNotification() {

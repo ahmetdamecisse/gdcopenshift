@@ -6,6 +6,7 @@
 package com.gdc.test.jpa;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Experiencesprofessionnelles.findAll", query = "SELECT e FROM Experiencesprofessionnelles e"),
     @NamedQuery(name = "Experiencesprofessionnelles.findByIdTypeDeProfil", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.idTypeDeProfil = :idTypeDeProfil"),
     @NamedQuery(name = "Experiencesprofessionnelles.findByDescription", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.description = :description"),
-    @NamedQuery(name = "Experiencesprofessionnelles.findByPeriode", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.periode = :periode"),
+    @NamedQuery(name = "Experiencesprofessionnelles.findByDatededebut", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.datededebut = :datededebut"),
+    @NamedQuery(name = "Experiencesprofessionnelles.findByDatefin", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.datefin = :datefin"),
     @NamedQuery(name = "Experiencesprofessionnelles.findByFonction", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.fonction = :fonction"),
     @NamedQuery(name = "Experiencesprofessionnelles.findByEnvironnement", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.environnement = :environnement"),
     @NamedQuery(name = "Experiencesprofessionnelles.findByProjet", query = "SELECT e FROM Experiencesprofessionnelles e WHERE e.projet = :projet"),
@@ -41,8 +45,13 @@ public class Experiencesprofessionnelles implements Serializable {
     private Integer idTypeDeProfil;
     @Column(name = "description")
     private String description;
-    @Column(name = "periode")
-    private String periode;
+    @Column(name = "datededebut")
+    @Temporal(TemporalType.DATE)
+    private Date datededebut;
+    @Basic(optional = false)
+    @Column(name = "datefin")
+    @Temporal(TemporalType.DATE)
+    private Date datefin;
     @Column(name = "fonction")
     private String fonction;
     @Column(name = "environnement")
@@ -62,6 +71,11 @@ public class Experiencesprofessionnelles implements Serializable {
         this.idTypeDeProfil = idTypeDeProfil;
     }
 
+    public Experiencesprofessionnelles(Integer idTypeDeProfil, Date datefin) {
+        this.idTypeDeProfil = idTypeDeProfil;
+        this.datefin = datefin;
+    }
+
     public Integer getIdTypeDeProfil() {
         return idTypeDeProfil;
     }
@@ -78,12 +92,20 @@ public class Experiencesprofessionnelles implements Serializable {
         this.description = description;
     }
 
-    public String getPeriode() {
-        return periode;
+    public Date getDatededebut() {
+        return datededebut;
     }
 
-    public void setPeriode(String periode) {
-        this.periode = periode;
+    public void setDatededebut(Date datededebut) {
+        this.datededebut = datededebut;
+    }
+
+    public Date getDatefin() {
+        return datefin;
+    }
+
+    public void setDatefin(Date datefin) {
+        this.datefin = datefin;
     }
 
     public String getFonction() {

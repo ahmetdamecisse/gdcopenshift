@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 20 Juillet 2016 à 10:22
+-- Généré le: Ven 22 Juillet 2016 à 11:22
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.4.3
 
@@ -30,6 +30,32 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
   `username` varchar(150) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avoirquestion`
+--
+
+CREATE TABLE IF NOT EXISTS `avoirquestion` (
+  `idFicheTest` int(11) NOT NULL,
+  `idQuestion` int(11) NOT NULL,
+  PRIMARY KEY (`idFicheTest`,`idQuestion`),
+  KEY `FK_EST_POSEE` (`idQuestion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avoirreponse`
+--
+
+CREATE TABLE IF NOT EXISTS `avoirreponse` (
+  `idReponse` int(11) NOT NULL,
+  `idQuestion` int(11) NOT NULL,
+  PRIMARY KEY (`idReponse`,`idQuestion`),
+  KEY `FK_A` (`idQuestion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -120,8 +146,9 @@ CREATE TABLE IF NOT EXISTS `entretien` (
 
 CREATE TABLE IF NOT EXISTS `experiencesprofessionnelles` (
   `idTypeDeProfil` int(11) NOT NULL,
-  `description` varchar(3000) DEFAULT NULL,
-  `periode` varchar(500) DEFAULT NULL,
+  `description` varchar(50000) DEFAULT NULL,
+  `datededebut` date DEFAULT NULL,
+  `datefin` date NOT NULL,
   `fonction` varchar(650) DEFAULT NULL,
   `environnement` varchar(3000) DEFAULT NULL,
   `projet` varchar(3000) DEFAULT NULL,
@@ -168,8 +195,6 @@ CREATE TABLE IF NOT EXISTS `fichedeposte` (
 CREATE TABLE IF NOT EXISTS `fichedetest` (
   `idFicheTest` int(11) NOT NULL,
   `username` varchar(150) NOT NULL,
-  `listeQuestions` varchar(3000) DEFAULT NULL,
-  `listeReponses` varchar(3000) DEFAULT NULL,
   `version` int(11) DEFAULT NULL,
   PRIMARY KEY (`idFicheTest`),
   KEY `FK_concevoirFicheTest` (`username`)
@@ -185,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `formation` (
   `idTypeDeProfil` int(11) NOT NULL,
   `nomDiplome` varchar(254) DEFAULT NULL,
   `universite` varchar(254) DEFAULT NULL,
-  `anneeOptention` datetime DEFAULT NULL,
+  `anneeObtention` date DEFAULT NULL,
   `mention` varchar(254) DEFAULT NULL,
   PRIMARY KEY (`idTypeDeProfil`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -215,6 +240,30 @@ CREATE TABLE IF NOT EXISTS `langues` (
   `niveau` varchar(254) DEFAULT NULL,
   PRIMARY KEY (`idTypeDeProfil`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `listequestion`
+--
+
+CREATE TABLE IF NOT EXISTS `listequestion` (
+  `idQuestion` int(11) NOT NULL AUTO_INCREMENT,
+  `question` varchar(3000) DEFAULT NULL,
+  PRIMARY KEY (`idQuestion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `listereponse`
+--
+
+CREATE TABLE IF NOT EXISTS `listereponse` (
+  `idReponse` int(11) NOT NULL AUTO_INCREMENT,
+  `reponse` varchar(3000) DEFAULT NULL,
+  PRIMARY KEY (`idReponse`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -267,6 +316,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `destinateur` varchar(254) DEFAULT NULL,
   `destinataire` varchar(6000) DEFAULT NULL,
   `corpsMessage` varchar(50000) DEFAULT NULL,
+  `pj` mediumblob NOT NULL,
   `dateNotification` datetime DEFAULT NULL,
   PRIMARY KEY (`idNotification`),
   KEY `FK_envoyerNotification` (`username`)
@@ -380,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   PRIMARY KEY (`user_role_id`),
   UNIQUE KEY `uni_username_role` (`role`,`username`),
   KEY `fk_username_idx` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Contenu de la table `user_roles`
@@ -406,6 +456,20 @@ INSERT INTO `user_roles` (`user_role_id`, `username`, `role`) VALUES
 --
 ALTER TABLE `administrateur`
   ADD CONSTRAINT `FK_GENERALISATION_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
+
+--
+-- Contraintes pour la table `avoirquestion`
+--
+ALTER TABLE `avoirquestion`
+  ADD CONSTRAINT `FK_A2` FOREIGN KEY (`idFicheTest`) REFERENCES `fichedetest` (`idFicheTest`),
+  ADD CONSTRAINT `FK_EST_POSEE` FOREIGN KEY (`idQuestion`) REFERENCES `listequestion` (`idQuestion`);
+
+--
+-- Contraintes pour la table `avoirreponse`
+--
+ALTER TABLE `avoirreponse`
+  ADD CONSTRAINT `FK_A` FOREIGN KEY (`idQuestion`) REFERENCES `listequestion` (`idQuestion`),
+  ADD CONSTRAINT `FK_EST` FOREIGN KEY (`idReponse`) REFERENCES `listereponse` (`idReponse`);
 
 --
 -- Contraintes pour la table `bdd`
